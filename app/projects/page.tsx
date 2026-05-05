@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { StageBadge, TypeBadge } from "@/components/ui/Badge";
 import { ProgressBar } from "@/components/ui/ProgressBar";
+import { MilestoneTracker } from "@/components/ui/MilestoneTracker";
 import { projects as allProjects } from "@/lib/mock-data";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Project, ProjectStage } from "@/lib/types";
 import {
-  Sun, Zap, MapPin, User, Calendar, ChevronDown,
+  Sun, MapPin, Calendar,
   LayoutGrid, List, Filter, ArrowUpDown, FileText,
-  CheckSquare, AlertCircle, DollarSign,
+  CheckSquare, DollarSign,
 } from "lucide-react";
 
 const stages: { key: ProjectStage; label: string; color: string; bg: string }[] = [
@@ -25,29 +27,42 @@ const stages: { key: ProjectStage; label: string; color: string; bg: string }[] 
 ];
 
 function ProjectCard({ project }: { project: Project }) {
+  const router = useRouter();
   const completedTasks = project.tasks.filter(t => t.completed).length;
   const totalTasks = project.tasks.length;
+  const track = project.type === "electrical" ? "electrical" : "solar";
+  const currentStage = project.stage.replace("-", " ");
 
   return (
-    <div className="kanban-card bg-white rounded-xl border border-slate-200 p-4 shadow-sm transition-all duration-200">
+    <div
+      onClick={() => router.push(`/projects/${project.id}`)}
+      className="kanban-card bg-white rounded-xl border border-slate-200 p-4 shadow-sm transition-all duration-200 cursor-pointer"
+    >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-xs font-mono text-slate-400">{project.projectNumber}</span>
         <TypeBadge type={project.type} />
       </div>
 
-      <h3 className="text-sm font-semibold text-slate-800 leading-snug mb-2">{project.title}</h3>
+      <h3 className="text-sm font-semibold text-slate-800 leading-snug mb-1">{project.title}</h3>
 
-      <div className="flex items-center gap-1 mb-3">
+      <div className="flex items-center gap-1 mb-2">
         <MapPin className="w-3 h-3 text-slate-300 shrink-0" />
         <p className="text-xs text-slate-400 truncate">{project.address.split(",")[0]}</p>
       </div>
 
-      {/* Progress */}
-      <ProgressBar value={project.progress} showLabel className="mb-3" />
+      {/* Compact milestone tracker */}
+      <div onClick={e => e.stopPropagation()}>
+        <MilestoneTracker
+          track={track}
+          currentStage={currentStage}
+          compact
+          readonly
+        />
+      </div>
 
       {/* Meta */}
-      <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap">
+      <div className="flex items-center gap-3 text-xs text-slate-500 flex-wrap mt-1">
         {project.value > 0 && (
           <span className="flex items-center gap-1 font-semibold text-slate-700">
             <DollarSign className="w-3 h-3" />
