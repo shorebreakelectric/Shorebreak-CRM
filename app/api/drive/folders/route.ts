@@ -21,6 +21,9 @@ async function findFolderByName(drive: ReturnType<typeof google.drive>, name: st
     q,
     fields: "files(id, name)",
     pageSize: 5,
+    includeItemsFromAllDrives: true,
+    supportsAllDrives: true,
+    corpora: "allDrives",
   });
   return res.data.files?.[0] ?? null;
 }
@@ -31,6 +34,8 @@ async function listChildren(drive: ReturnType<typeof google.drive>, parentId: st
     fields: "files(id, name, mimeType, size, modifiedTime, webViewLink)",
     orderBy: "name",
     pageSize: 100,
+    includeItemsFromAllDrives: true,
+    supportsAllDrives: true,
   });
   return res.data.files ?? [];
 }
