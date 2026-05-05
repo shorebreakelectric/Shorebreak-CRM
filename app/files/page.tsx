@@ -109,7 +109,7 @@ export default function FilesPage() {
           <path fill="#ffba00" d="M73.4 26.5l-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3L43.65 25 59.8 53h27.45c0-1.55-.4-3.1-1.2-4.5z"/>
         </svg>
         <span>
-          Connected to <strong>shorebreakelectric / Shorebreak Jobs</strong>
+          Connected to <strong>Shorebreak Electric / Shorebreak Jobs</strong>
         </span>
         <button onClick={loadDrive} className="ml-auto flex items-center gap-1 text-slate-500 hover:text-slate-700 font-medium text-xs">
           <RefreshCw className="w-3 h-3" /> Sync

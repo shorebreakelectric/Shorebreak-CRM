@@ -72,7 +72,6 @@ export async function GET(req: NextRequest) {
     const files = children.filter(f => f.mimeType !== "application/vnd.google-apps.folder");
 
     return NextResponse.json({
-      rootFolderId: rootFolder.id,
       jobsFolderId: jobsFolder.id,
       projectFolders,
       files,
