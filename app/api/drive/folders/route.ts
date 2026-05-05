@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Otherwise, navigate to shorebreakelectric > Shorebreak Jobs
-    const rootFolder = await findFolderByName(drive, "shorebreakelectric");
+    const rootFolder = await findFolderByName(drive, "Shorebreak Electric");
     if (!rootFolder) {
       return NextResponse.json({ error: "Could not find 'shorebreakelectric' folder in Drive" }, { status: 404 });
     }
