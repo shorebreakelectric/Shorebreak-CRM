@@ -57,13 +57,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ files });
     }
 
-    // Otherwise, navigate to shorebreakelectric > Shorebreak Jobs
-    const rootFolder = await findFolderByName(drive, "Shorebreak Electric");
-    if (!rootFolder) {
-      return NextResponse.json({ error: "Could not find 'shorebreakelectric' folder in Drive" }, { status: 404 });
-    }
+    // Use the known folder ID for "Shorebreak Electric" (from Drive URL)
+    const SHOREBREAK_ELECTRIC_ID = "1rL-AqcuT8wKPr-sqMLvlABhIoK4ZkuNF";
 
-    const jobsFolder = await findFolderByName(drive, "Shorebreak Jobs", rootFolder.id!);
+    const jobsFolder = await findFolderByName(drive, "Shorebreak Jobs", SHOREBREAK_ELECTRIC_ID);
     if (!jobsFolder) {
       return NextResponse.json({ error: "Could not find 'Shorebreak Jobs' folder" }, { status: 404 });
     }
